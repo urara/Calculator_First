@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    >
+<TextView
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:textSize="35sp"
+  android:gravity="right"
+  android:layout_gravity="center_vertical"
+  android:background="#ffffffff"
+  android:textColor="#cc996633"
+  android:id="@+id/display"
+  android:text="0"/>
+
+ <LinearLayout android:layout_width="fill_parent" android:orientation="horizontal" android:layout_height="fill_parent" android:weightSum="1">
+ 	<LinearLayout android:layout_width="wrap_content" android:orientation="horizontal" android:layout_height="fill_parent" >
+        <TableLayout android:id="@+id/tableLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <TableRow android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/tableRow1">
+                <Button android:layout_height="fill_parent" android:text="7" android:onClick="onClickButton" android:layout_width="100px" android:id="@+id/seven" android:layout_margin="5px" android:layout_weight="1" android:minWidth="60dip" ></Button>
+                <Button android:layout_height="fill_parent" android:text="8" android:onClick="onClickButton" android:layout_width="100px" android:id="@+id/eight" android:layout_margin="5px" android:layout_weight="1" android:minWidth="60dip"></Button>
+                <Button android:layout_height="fill_parent" android:text="9" android:onClick="onClickButton" android:layout_width="100px" android:id="@+id/nine" android:layout_margin="5px" android:layout_weight="1" android:minWidth="60dip"></Button>
+            </TableRow>
+            <TableRow android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/tableRow2">
+                <Button android:layout_height="fill_parent" android:text="4" android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/four" android:layout_margin="5px" android:layout_weight="1"></Button>
+                <Button android:layout_height="fill_parent" android:text="5" android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/five" android:layout_margin="5px" android:layout_weight="1"></Button>
+                <Button android:layout_height="fill_parent" android:text="6" android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/six" android:layout_margin="5px" android:layout_weight="1"></Button>
+            </TableRow>
+            <TableRow android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/tableRow3">
+                <Button android:layout_height="fill_parent" android:text="1" android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/one" android:layout_margin="5px" android:layout_weight="1"></Button>
+                <Button android:layout_height="fill_parent" android:text="2" android:onClick="onClickButton" android:layout_width="wrap_content" android:id="@+id/two" android:layout_margin="5px" android:layout_weight="1"></Button>
+                <Button android:layout_height="fill_parent" android:text="3" android:onClick="onClickButton" android:layout_width="wrap_content" android:id="@+id/three" android:layout_margin="5px" android:layout_weight="1"></Button>
+            </TableRow>
+            <TableRow android:layout_weight="1" android:layout_height="fill_parent" android:layout_width="wrap_content" android:id="@+id/tableRow4">
+                <Button android:layout_height="fill_parent" android:text="." android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/comma" android:layout_margin="5px" android:layout_weight="1"></Button>
+                <Button android:layout_height="fill_parent" android:text="0" android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/zero" android:layout_margin="5px" android:layout_weight="1"></Button>
+                <Button android:layout_height="fill_parent" android:text="00" android:onClick="onClickButton" android:layout_width="fill_parent" android:id="@+id/doublezero" android:layout_margin="5px" android:layout_weight="1"></Button>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+ 	<LinearLayout android:orientation="vertical" android:layout_width="86dp" android:layout_height="fill_parent" android:layout_weight="1">
+ 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/allclear" android:layout_height="fill_parent" android:layout_weight="1" android:text="AC"></Button>
+ 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/backspace" android:layout_height="fill_parent" android:layout_weight="1" android:text="←"></Button> 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/minus" android:layout_height="fill_parent" android:layout_weight="1" android:text="-"></Button>
+ 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/plus" android:layout_height="fill_parent" android:layout_weight="1" android:text="+"></Button>
+ 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/multiple" android:layout_height="fill_parent" android:layout_weight="1" android:text="×"></Button>
+ 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/devide" android:layout_height="fill_parent" android:layout_weight="1" android:text="÷"></Button>
+ 		<Button android:onClick="onClickButton" android:layout_margin="5px" android:layout_width="fill_parent" android:id="@+id/equal" android:layout_height="fill_parent" android:layout_weight="1" android:text="="></Button>
+ 	</LinearLayout>
+    
+    
+    
+    
+  </LinearLayout>
+
+</LinearLayout>
