@@ -1,6 +1,7 @@
 package com.example.testcalculator;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -182,7 +183,9 @@ public class TestCalculatorActivity extends Activity {
 				else if(operand == MULTIPLE){
 					B = new BigDecimal(display.getText().toString());
 					result = A.multiply(B);
+					Log.d("cutZero‘O","result = " + result);
 					String temp = cutZero("" + result);
+					Log.d("cutZeroŒã","result = " + result);
 					display.setText("" + normalization("" + temp));
 					operand = 0;
 					initFlag = 1;
@@ -478,8 +481,11 @@ public class TestCalculatorActivity extends Activity {
     			
     		}
     		*/
-    		Double temp = Double.parseDouble(display);  //Math.pow(10, display.length() - MAX_LENGTH);
-    		display = temp.toString();
+    		
+    		DecimalFormat df = new DecimalFormat(".000E0");
+    		display = df.format(display);
+    		//Double temp = Double.parseDouble(display);  //Math.pow(10, display.length() - MAX_LENGTH);
+    		//isplay = temp.toString();
     		
     		
     		
@@ -487,16 +493,26 @@ public class TestCalculatorActivity extends Activity {
     	return display;
     }
     
-    private String cutZero(String number){
+    public String cutZero(String number){
+    	Log.d("cutzero-1",number);
     	int canCutFlag = 0;
-    	for(int i=0; i<MAX_LENGTH ; i++){
+    	Log.d("cutzero0",number);
+    	int length = number.length();
+    	Log.d("cutzero","Length = " + length);
+    	if(length > MAX_LENGTH){
+    		length = MAX_LENGTH;
+    	}
+    	
+    	
+    	for(int i=0; i<length ; i++){
     		//Log.d("cutZero in if", "MAX_LENGTH= " + MAX_LENGTH + "i =" + i);
+    		Log.d("cutzero1","");
     		String chara = number.substring(i, i+1);
-    			if(chara.equals(".")){
-    				canCutFlag = 1;
-        			Log.d("cutZero in if", "canCutFlag= " + canCutFlag + "i =" + i);
-    				break;
-    			}
+   			if(chara.equals(".")){
+   				canCutFlag = 1;
+       			Log.d("cutZero in if", "canCutFlag= " + canCutFlag + "i =" + i);
+   				break;
+   			}
     	}
     	Log.d("if‘O", "aaa");
     	if(canCutFlag == 1){
