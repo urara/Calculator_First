@@ -481,9 +481,11 @@ public class TestCalculatorActivity extends Activity {
     			
     		}
     		*/
-    		
-    		DecimalFormat df = new DecimalFormat(".000E0");
-    		display = df.format(display);
+    		Log.d("DecimalFormat1",display);
+    		DecimalFormat df = new DecimalFormat("0.00E0");
+    		Log.d("DecimalFormat2",display);
+    		display = df.format(new BigDecimal(display));
+    		Log.d("DecimalFormat3",display);
     		//Double temp = Double.parseDouble(display);  //Math.pow(10, display.length() - MAX_LENGTH);
     		//isplay = temp.toString();
     		
