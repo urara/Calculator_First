@@ -1,4 +1,4 @@
-package com.example.calculatorfirst;
+package com.example.testcalculator;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class CalculatorFirstActivity extends Activity {
+public class TestCalculatorActivity extends Activity {
     /** Called when the activity is first created. */
 
 	static final int PLUS = 1;		//演算子が＋のとき
@@ -35,7 +35,7 @@ public class CalculatorFirstActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Log.d("onCreate","start");
+        
         display = (TextView)findViewById(R.id.display);
         //0~9を押された場合を操作するインスタンス
         Button button0 = (Button)findViewById(R.id.zero);
