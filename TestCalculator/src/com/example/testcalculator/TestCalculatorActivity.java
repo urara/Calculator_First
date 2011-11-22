@@ -16,7 +16,7 @@ public class TestCalculatorActivity extends Activity {
 	static final int PLUS = 1;		//‰‰Zq‚ª{‚Ì‚Æ‚«
 	static final int MINUS =2;		//‰‰Zq‚ª|‚Ì‚Æ‚«
 	static final int MULTIPLE = 3;	//‰‰Zq‚ª~‚Ì‚Æ‚«
-	static final int DEVIDE = 4;	//‰‰Zq‚ª€‚Ì‚Æ‚«44
+	static final int DEVIDE = 4;	//‰‰Zq‚ª€‚Ì‚Æ‚«
 	static final int MAX_LENGTH = 8;
 	
 	
