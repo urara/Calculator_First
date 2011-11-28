@@ -13,6 +13,8 @@ import android.widget.TextView;
 public class TestCalculatorActivity extends Activity {
     /** Called when the activity is first created. */
 
+	//1‰ñ–Ú
+	
 	static final int PLUS = 1;		//‰‰Zq‚ª{‚Ì‚Æ‚«
 	static final int MINUS =2;		//‰‰Zq‚ª|‚Ì‚Æ‚«
 	static final int MULTIPLE = 3;	//‰‰Zq‚ª~‚Ì‚Æ‚«
