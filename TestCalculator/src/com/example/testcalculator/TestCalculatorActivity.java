@@ -16,7 +16,7 @@ public class TestCalculatorActivity extends Activity {
 	static final int PLUS = 1;		//演算子が＋のとき
 	static final int MINUS =2;		//演算子が－のとき
 	static final int MULTIPLE = 3;	//演算子が×のとき
-	static final int DEVIDE = 4;	//演算子が÷のときaas
+	static final int DEVIDE = 4;	//演算子が÷のとき
 	static final int MAX_LENGTH = 8;
 	
 	
@@ -29,8 +29,7 @@ public class TestCalculatorActivity extends Activity {
 	int commaFlag = 0;				//コンマ一回押されてたら立てるフラグ
 	int evaluateFlag = 0;			//コンマの位置
 	
-	
-	TextView display; 
+	TextView display; 				//出力される結果
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class TestCalculatorActivity extends Activity {
         setContentView(R.layout.main);
         
         display = (TextView)findViewById(R.id.display);
-        //0~9を押された場合を操作するインスタンス
+        //0~9,00を押された場合を操作するインスタンス
         Button button0 = (Button)findViewById(R.id.zero);
         Button button1 = (Button)findViewById(R.id.one);
         Button button2 = (Button)findViewById(R.id.two);
@@ -69,15 +68,10 @@ public class TestCalculatorActivity extends Activity {
         buttonPlus.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//Log.d("tasizan","");
-				//A = Integer.parseInt("" + display.getText());
 				A = new BigDecimal(display.getText().toString());	
-				
 				operand = PLUS;
 				initFlag = 1;
 				commaFlag = 0;
-				//display.setText("0");
 			}
 		});
         
@@ -85,12 +79,10 @@ public class TestCalculatorActivity extends Activity {
         buttonMinus.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
 				A = new BigDecimal(display.getText().toString());
 				operand = MINUS;
 				initFlag = 1;
 				commaFlag = 0;
-				//display.setText("0");
 			}
 		});
         
@@ -98,12 +90,10 @@ public class TestCalculatorActivity extends Activity {
         buttonMultiple.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
 				A = new BigDecimal(display.getText().toString());
 				operand = MULTIPLE;
 				initFlag = 1;
 				commaFlag = 0;
-				//display.setText("0");
 			}
 		});
         
@@ -111,21 +101,17 @@ public class TestCalculatorActivity extends Activity {
         buttonDevide.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
 				A = new BigDecimal(display.getText().toString());
 				operand = DEVIDE;
 				initFlag = 1;
 				commaFlag = 0;
-				//display.setText("0");
 			}
-		});
-        
+		});        
         
         //allclearボタン
         buttonAC.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
 				A = new BigDecimal("0");
 				B = new BigDecimal("0");
 				display.setText("0");
@@ -137,35 +123,29 @@ public class TestCalculatorActivity extends Activity {
         buttonBS.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//Log.d("BS","aaa");
-				//TextView display = (TextView)findViewById(R.id.display);
-				//backspaceでコンマ消したとき
-				if(display.toString().substring(display.getText().length()-1, display.getText().length()).equals(".")){
+				//backspaceで消される文字が”.”のときコンマがまた打てるように
+
+				if(display.getText().toString().substring(display.getText().length()-1, display.getText().length()).equals("." + "")){
 					commaFlag = 0;
-				}else{
-				
-		    		display.setText(display.getText().subSequence(0, display.getText().length()-1));
-		    		if(display.getText().length() == 0){
-		    			display.setText("0");
-		    		}
+				}
+		    	display.setText(display.getText().subSequence(0, display.getText().length()-1));
+		    	if(display.getText().length() == 0){
+		    		display.setText("0");
+		    	
 				}
 			}
-		});
-        
+		});        
         
         //equalボタン
         buttonEQ.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
 				commaFlag = 0;
 				//足し算
 				if(operand == PLUS){
-					//int result = A + Integer.parseInt("" + display.getText());
 					B = new BigDecimal(display.getText().toString());
 					result = A.add(B);
-					
-					display.setText("" + result);
+					display.setText(normalization("" + result));
 					operand = 0;
 					initFlag = 1;
 				}
@@ -174,7 +154,7 @@ public class TestCalculatorActivity extends Activity {
 				else if(operand == MINUS){
 					B = new BigDecimal(display.getText().toString());
 					result = A.subtract(B);
-					display.setText("" + result);
+					display.setText(normalization("" + result));
 					operand = 0;
 					initFlag = 1;
 				}
@@ -183,10 +163,10 @@ public class TestCalculatorActivity extends Activity {
 				else if(operand == MULTIPLE){
 					B = new BigDecimal(display.getText().toString());
 					result = A.multiply(B);
-					Log.d("cutZero前","result = " + result);
+					//Log.d("cutZero前","result = " + result);
 					String temp = cutZero("" + result);
-					Log.d("cutZero後","result = " + result);
-					display.setText("" + normalization("" + temp));
+					Log.d("cutZero後","result = " + result + " temp=" + temp);
+					display.setText(normalization("" + temp));
 					operand = 0;
 					initFlag = 1;
 				}
@@ -194,17 +174,21 @@ public class TestCalculatorActivity extends Activity {
 				//割り算
 				else if(operand == DEVIDE){
 					B = new BigDecimal(display.getText().toString());
-					result = A.divide(B, 2, BigDecimal.ROUND_HALF_UP);
-					String temp = cutZero("" + result);
-					display.setText(result.toString());
+					if(B.toString().equals("0")){
+						Log.d("=if=","A =" + A + " B =" + B + "result =" + result);
+						display.setText("0");
+					}else{
+						result = A.divide(B, MAX_LENGTH-2, BigDecimal.ROUND_HALF_UP);
+						Log.d("devide","A =" + A + " B =" + B + "result =" + result);
+						String temp = cutZero("" + result);
+						display.setText(temp.toString());
+					}
+					
+					Log.d("owari","A =" + A + " B =" + B + "result =" + result);
 					operand = 0;
 					initFlag = 1;
 				}
-				//その他
-				else{
-				
-				}
-				
+			
 			}
 		});
         
@@ -214,10 +198,6 @@ public class TestCalculatorActivity extends Activity {
         buttonComma.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
 
 					
@@ -243,16 +223,10 @@ public class TestCalculatorActivity extends Activity {
         button1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("1");
 					initFlag = 0;
 				}else{
-					//Log.d("if中","append");	
 					display.append("1");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -262,16 +236,11 @@ public class TestCalculatorActivity extends Activity {
         button2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
 					Log.d("if中","setText");	
 					display.setText("2");
 					initFlag = 0;
 				}else{
-					//Log.d("if中","append");	
 					display.append("2");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -281,16 +250,11 @@ public class TestCalculatorActivity extends Activity {
         button3.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
 					Log.d("if中","setText");	
 					display.setText("3");
 					initFlag = 0;
-				}else{
-					//Log.d("if中","append");	
+				}else{	
 					display.append("3");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -300,16 +264,11 @@ public class TestCalculatorActivity extends Activity {
         button4.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
 					Log.d("if中","setText");	
 					display.setText("4");
 					initFlag = 0;
 				}else{
-					//Log.d("if中","append");	
 					display.append("4");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -319,16 +278,10 @@ public class TestCalculatorActivity extends Activity {
         button5.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("5");
 					initFlag = 0;
 				}else{
-					//Log.d("if中","append");	
 					display.append("5");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -338,16 +291,10 @@ public class TestCalculatorActivity extends Activity {
         button6.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				//Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("6");
 					initFlag = 0;
 				}else{
-					//Log.d("if中","append");	
 					display.append("6");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -357,16 +304,10 @@ public class TestCalculatorActivity extends Activity {
         button7.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("7");
 					initFlag = 0;
 				}else{
-					Log.d("if中","append");	
 					display.append("7");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -376,16 +317,10 @@ public class TestCalculatorActivity extends Activity {
         button8.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("8");
 					initFlag = 0;
 				}else{
-					Log.d("if中","append");	
 					display.append("8");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -395,18 +330,12 @@ public class TestCalculatorActivity extends Activity {
         button9.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("9");
 					initFlag = 0;
 				}else{
 					
 					display.append("9");
-					Log.d("setText前","display=" + display.getText());	
 					display.setText(evalLength(display.getText().toString()));
 				}
 			}
@@ -415,16 +344,10 @@ public class TestCalculatorActivity extends Activity {
         button0.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("0");
 					initFlag = 0;
 				}else{
-					Log.d("if中","append");	
 					display.append("0");
 					display.setText(evalLength(display.getText().toString()));
 				}
@@ -434,16 +357,10 @@ public class TestCalculatorActivity extends Activity {
         button00.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TextView display = (TextView)findViewById(R.id.display);
-				//TextView display = new TextView(this);
-
-				Log.d("debug","display={" + display.getText() + "}");
 				if("0".equals("" + display.getText() ) || initFlag == 1){
-					Log.d("if中","setText");	
 					display.setText("0");
 					initFlag = 0;
 				}else{
-					Log.d("if中","append");	
 					display.append("00");
 					display.setText(evalLength(display.getText().toString()));
 					display.setText(evalLength(display.getText().toString()));
@@ -452,9 +369,8 @@ public class TestCalculatorActivity extends Activity {
 		});
 
     }
-    
+    //長かった時に切る(文字が打ち続けられないように)
     private String evalLength(String temp){
-    	
     	if(temp.length() > MAX_LENGTH){
     		return "" + temp.subSequence(0, MAX_LENGTH);
     	}else
@@ -463,68 +379,53 @@ public class TestCalculatorActivity extends Activity {
 
     //正規化用
     private String normalization(String display){
+    	String result = display;
+    	String normalizedDisplay = null;
     	if(display.length() > MAX_LENGTH){
-    		//文字列内からコンマを探す
-    		
-    		/*
-    		for(int i=0; i<MAX_LENGTH ; i++){
-    			String chara = display.substring(i, i+1);
-    			
-    			//小数の正規化
-    			if(chara.equals(".")){
-    				Log.d("normaliza", "if中");
-    				Double temp = Double.parseDouble(display)/Math.pow(10, (i-1));
-    				display = temp.toString().substring(0, MAX_LENGTH-5) + "E" + (i-1);
-    				//display = temp + "E" + (i-1);
-    				break;
-     			}
-    			
-    		}
-    		*/
-    		Log.d("DecimalFormat1",display);
+    		result = "";
+
     		DecimalFormat df = new DecimalFormat("0.00E0");
-    		Log.d("DecimalFormat2",display);
-    		display = df.format(new BigDecimal(display));
-    		Log.d("DecimalFormat3",display);
-    		//Double temp = Double.parseDouble(display);  //Math.pow(10, display.length() - MAX_LENGTH);
-    		//isplay = temp.toString();
-    		
-    		
+    		normalizedDisplay = df.format(new BigDecimal(display));
+    		    		
+   			result = normalizedDisplay.substring(0, 5);	
+   			if(display.length() > 10){
+   				Log.d("大きい時","result = " + result + " normdis = " + normalizedDisplay);
+   				result += normalizedDisplay.substring(normalizedDisplay.length()-3 , normalizedDisplay.length());
+   			}else{
+   				Log.d("小さい時","result = " + result + " normdis = " + normalizedDisplay);	
+   				result += normalizedDisplay.substring(normalizedDisplay.length()-2 , normalizedDisplay.length());
+    		}
+    			
+    		Log.d("DecimalFormat4","result = " + result + " display.substring(0, 5)=" + display.substring(0, 5) 
+    				+ "display.substring(display.length() - 4, display.length() = " + display.substring(display.length() - 4, display.length()));
     		
     	}
-    	return display;
+    	return result;
     }
     
+    //小数点以下の最下位の0を切る
     public String cutZero(String number){
-    	Log.d("cutzero-1",number);
     	int canCutFlag = 0;
-    	Log.d("cutzero0",number);
-    	int length = number.length();
-    	Log.d("cutzero","Length = " + length);
+       	int length = number.length();
     	if(length > MAX_LENGTH){
     		length = MAX_LENGTH;
     	}
     	
     	
     	for(int i=0; i<length ; i++){
-    		//Log.d("cutZero in if", "MAX_LENGTH= " + MAX_LENGTH + "i =" + i);
-    		Log.d("cutzero1","");
     		String chara = number.substring(i, i+1);
    			if(chara.equals(".")){
    				canCutFlag = 1;
-       			Log.d("cutZero in if", "canCutFlag= " + canCutFlag + "i =" + i);
    				break;
    			}
     	}
-    	Log.d("if前", "aaa");
     	if(canCutFlag == 1){
         	for(int i = number.length()-1 ; i > 0 ; i--){
-    			Log.d("cutZero in if", "canCutFlag= " + canCutFlag + "i =" + i);
     			if(number.substring(i , i+1).equals("0")){
-    				Log.d("if中", "number = " + number);
     				number = number.substring(0 , i);
     			}else if(number.substring(i , i+1).equals(".")){
     				number = number.substring(0 , i);
+    				break;
     			}else{
     				break;
     			}
