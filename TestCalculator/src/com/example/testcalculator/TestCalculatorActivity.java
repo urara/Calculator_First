@@ -13,11 +13,11 @@ import android.widget.TextView;
 public class TestCalculatorActivity extends Activity {
     /** Called when the activity is first created. */
 
-	static final int PLUS = 1;		//‰‰Zq‚ª{‚Ì‚Æ‚«
-	static final int MINUS =2;		//‰‰Zq‚ª|‚Ì‚Æ‚«
-	static final int MULTIPLE = 3;	//‰‰Zq‚ª~‚Ì‚Æ‚«
-	static final int DEVIDE = 4;	//‰‰Zq‚ª€‚Ì‚Æ‚«
-	static final int MAX_LENGTH = 8;
+	static final int PLUS = 1;			//‰‰Zq‚ª{‚Ì‚Æ‚«
+	static final int MINUS =2;			//‰‰Zq‚ª|‚Ì‚Æ‚«
+	static final int MULTIPLE = 3;		//‰‰Zq‚ª~‚Ì‚Æ‚«
+	static final int DEVIDE = 4;		//‰‰Zq‚ª€‚Ì‚Æ‚«
+	static final int MAX_LENGTH = 8;	
 	
 	
 	
@@ -181,7 +181,9 @@ public class TestCalculatorActivity extends Activity {
 						result = A.divide(B, MAX_LENGTH-2, BigDecimal.ROUND_HALF_UP);
 						Log.d("devide","A =" + A + " B =" + B + "result =" + result);
 						String temp = cutZero("" + result);
-						display.setText(temp.toString());
+						display.setText(normalization("" + temp));
+						operand = 0;
+						initFlag = 1;
 					}
 					
 					Log.d("owari","A =" + A + " B =" + B + "result =" + result);
