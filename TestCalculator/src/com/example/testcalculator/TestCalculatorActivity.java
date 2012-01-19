@@ -37,6 +37,9 @@ public class TestCalculatorActivity extends Activity {
         setContentView(R.layout.main);
         
         display = (TextView)findViewById(R.id.display);
+        Log.d("testmethod","result = " + normalization("100000000"));
+
+        
         //0~9,00を押された場合を操作するインスタンス
         Button button0 = (Button)findViewById(R.id.zero);
         Button button1 = (Button)findViewById(R.id.one);
@@ -372,7 +375,7 @@ public class TestCalculatorActivity extends Activity {
 
     }
     //長かった時に切る(文字が打ち続けられないように)
-    private String evalLength(String temp){
+    public String evalLength(String temp){
     	if(temp.length() > MAX_LENGTH){
     		return "" + temp.subSequence(0, MAX_LENGTH);
     	}else
@@ -380,7 +383,7 @@ public class TestCalculatorActivity extends Activity {
     }
 
     //正規化用
-    private String normalization(String display){
+    public String normalization(String display){
     	String result = display;
     	String normalizedDisplay = null;
     	if(display.length() > MAX_LENGTH){
@@ -407,12 +410,12 @@ public class TestCalculatorActivity extends Activity {
     
     //小数点以下の最下位の0を切る
     public String cutZero(String number){
+    	
     	int canCutFlag = 0;
        	int length = number.length();
     	if(length > MAX_LENGTH){
     		length = MAX_LENGTH;
     	}
-    	
     	
     	for(int i=0; i<length ; i++){
     		String chara = number.substring(i, i+1);
